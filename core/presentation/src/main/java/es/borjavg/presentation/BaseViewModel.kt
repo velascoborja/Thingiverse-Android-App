@@ -28,7 +28,7 @@ typealias Reducer<T> = T.() -> T
 abstract class BaseViewModel<V : ViewState, A : ViewAction>(
     protected val errorProvider: ErrorProvider,
     protected val dispatchers: CoroutinesDispatchers,
-) : ViewModel(), NavigationTracker {
+) : ViewModel() {
 
     protected abstract val initialViewState: V
 
