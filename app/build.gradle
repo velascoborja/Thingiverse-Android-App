@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 //Generate versionCode based on total commit count
@@ -48,19 +50,15 @@ android {
     flavorDimensions "enviroment"
 
     productFlavors {
-        mock {
+        pre {
             dimension "enviroment"
             applicationId "es.borjavg.thingiverse"
             versionNameSuffix "-pre"
-            buildConfigField "String", "API_BASE_URL", "\"/\""
-            buildConfigField "String", "THINGIVERSE_TOKEN", "\"/\""
         }
         dev {
             dimension "enviroment"
             applicationId "es.borjavg.thingiverse"
             versionNameSuffix "-dev"
-            buildConfigField "String", "API_BASE_URL", "\"https://dev-wally-back.cloudapp.repsol.com/\""
-            buildConfigField "String", "THINGIVERSE_TOKEN", "\"https://dev-wally-back.cloudapp.repsol.com/\""
         }
     }
 }
@@ -77,4 +75,13 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+
+    implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
 }

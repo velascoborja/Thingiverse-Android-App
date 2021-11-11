@@ -10,6 +10,8 @@ dependencies {
     testImplementation "junit:junit:$jUnitVersion"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesCoreVersion"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
+    implementation "javax.inject:javax.inject:$javaxInjectVersion"
+
 }
 
 sourceCompatibility = "8"

@@ -8,9 +8,13 @@ android {
     productFlavors {
         dev {
             dimension "enviroment"
+            buildConfigField "String", "API_BASE_URL", "\"https://api.thingiverse.com/\""
+            buildConfigField "String", "THINGIVERSE_TOKEN", "\"4cca429d04a1f8cdecc020bfa818d3e8\""
         }
         pre {
             dimension "enviroment"
+            buildConfigField "String", "API_BASE_URL", "\"https://api.thingiverse.com/\""
+            buildConfigField "String", "THINGIVERSE_TOKEN", "\"4cca429d04a1f8cdecc020bfa818d3e8\""
         }
     }
 }
@@ -18,15 +22,15 @@ dependencies {
     implementation project(':core:domain')
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesCoreVersion"
-    //Required by Gigya to allow compiling this module independently
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    implementation "javax.inject:javax.inject:$javaxInjectVersion"
 
-    testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
-    testImplementation "com.github.ologe:flow-test-observer:$flowTestObserver"
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesCoreVersion"
-
 
 }

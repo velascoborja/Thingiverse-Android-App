@@ -19,14 +19,18 @@ interface ViewState
 interface ViewAction
 
 /**
+ * Represents intents that views use to communicate with ViewModels
+ */
+interface ViewIntent
+
+/**
  * Base [ViewModel] to extend. It is parametrized on [ViewState] and [ViewAction]
  * [ViewState] mutation must be done through [BaseViewModel.setState]
  * [ViewAction] dispatching must be done through [BaseViewModel.dispatchAction]
  */
 typealias Reducer<T> = T.() -> T
 
-abstract class BaseViewModel<V : ViewState, A : ViewAction>(
-    protected val errorProvider: ErrorProvider,
+abstract class BaseViewModel<V : ViewState, A : ViewAction, I : ViewIntent>(
     protected val dispatchers: CoroutinesDispatchers,
 ) : ViewModel() {
 
@@ -34,11 +38,11 @@ abstract class BaseViewModel<V : ViewState, A : ViewAction>(
 
     private val _viewState: MutableLiveData<V> by lazy { mutableLiveDataOf(initialViewState) }
     private val _viewActions: LiveEvent<A> = LiveEvent()
-    private val _viewErrors: LiveEvent<PresentationError> = LiveEvent()
+    private val _viewErrors: LiveEvent<Throwable> = LiveEvent()
 
     val viewState: LiveData<V> by lazy { _viewState }
     val viewActions: LiveData<A> by lazy { _viewActions }
-    val viewErrors: LiveData<PresentationError> by lazy { _viewErrors }
+    val viewErrors: LiveData<Throwable> by lazy { _viewErrors }
 
     /**
      * Returns the current state of the View. Its is safe to call
@@ -62,11 +66,13 @@ abstract class BaseViewModel<V : ViewState, A : ViewAction>(
     }
 
     /**
-     * Dispatches the given [PresentationError] to [viewErrors] observers
+     * Dispatches the given [Throwable] to [viewErrors] observers
      */
-    protected fun dispatchError(error: PresentationError) {
+    protected fun dispatchError(error: Throwable) {
         _viewErrors.value = error
     }
+
+    abstract fun sendIntent(intent: I)
 
     /**
      * Launches the given suspend block in the scope of this ViewModel

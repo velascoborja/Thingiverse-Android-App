@@ -1,12 +1,7 @@
 package es.borjavg.thingiverse
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class ThingiverseApp : Application() {
-
-    override fun onCreate() {
-        super.onCreate()
-
-        // TODO do stuff
-    }
-}
+@HiltAndroidApp
+class ThingiverseApp : Application()
