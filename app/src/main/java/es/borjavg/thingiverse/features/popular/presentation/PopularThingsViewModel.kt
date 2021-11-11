@@ -38,7 +38,7 @@ class PopularThingsViewModel(
         launch {
             setState { copy(isLoading = true) }
             getPopularThingsUseCase().fold({ things ->
-                setState { copy(isLoading = true, items = things.map { it.toPresentation() }) }
+                setState { copy(isLoading = false, items = things.map { it.toPresentation() }) }
             }, {
                 dispatchError(Throwable())
                 setState { copy(isLoading = false) }

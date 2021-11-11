@@ -18,6 +18,8 @@ buildscript {
         javaxInjectVersion = "1"
         androidXCollectionVersion = "1.1.0"
         activityVersion = "1.4.0"
+        glideVersion = "4.12.0"
+        lottieVersion = "4.2.0"
 
         //Dependencies
         hiltVersion = 2.37
