@@ -5,8 +5,13 @@ import es.borjavg.domain.models.Thing
 import es.borjavg.domain.repositories.ThingsRepository
 import javax.inject.Inject
 
-class GetPopularThingsUseCase @Inject constructor(
-    private val thingsRepository: ThingsRepository
-) {
-    suspend operator fun invoke(): Either<List<Thing>> = thingsRepository.getPopularThings()
+interface GetPopularThingsUseCase {
+    suspend operator fun invoke(): Either<List<Thing>>
+
+    class GetPopularThingsUseCaseImpl @Inject constructor(
+        private val thingsRepository: ThingsRepository
+    ) : GetPopularThingsUseCase {
+        override suspend fun invoke(): Either<List<Thing>> =
+            thingsRepository.getPopularThings()
+    }
 }
