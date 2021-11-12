@@ -8,7 +8,7 @@ sealed class MainViewIntent : ViewIntent {
 }
 
 data class MainViewState(
-    val isLoading: Boolean = false
+    val showToolbar: Boolean
 ) : ViewState
 
 sealed class MainViewActions : ViewAction {
@@ -20,7 +20,7 @@ sealed class MainViewActions : ViewAction {
 class MainViewModel(
     dispatchers: CoroutinesDispatchers
 ) : BaseViewModel<MainViewState, MainViewActions, MainViewIntent>(dispatchers) {
-    override val initialViewState: MainViewState get() = MainViewState()
+    override val initialViewState: MainViewState get() = MainViewState(showToolbar = true)
 
     override fun sendIntent(intent: MainViewIntent) =
         when (intent) {

@@ -13,6 +13,7 @@ import es.borjavg.thingiverse.features.main.presentation.MainViewIntent
 import es.borjavg.thingiverse.features.main.presentation.MainViewModel
 import es.borjavg.thingiverse.features.main.presentation.MainViewModelFactory
 import es.borjavg.thingiverse.features.popular.ui.PopularThingsFragment
+import es.borjavg.thingiverse.ui.common.switchVisibility
 import es.borjavg.thingiverse.ui.navigation.Navigator
 import es.borjavg.thingiverse.ui.navigation.NavigatorImpl
 import es.borjavg.thingiverse.ui.navigation.navigator
@@ -59,11 +60,7 @@ class MainActivity : FragmentActivity() {
         }
 
         viewModel.viewState.observe(this) {
-            // TODO handle view state
-        }
-
-        viewModel.viewErrors.observe(this) {
-            // TODO handle error
+            binding.toolbar.switchVisibility(it.showToolbar)
         }
 
         pushTab(PopularThingsFragment.newInstance())

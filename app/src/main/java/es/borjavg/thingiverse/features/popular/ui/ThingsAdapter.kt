@@ -9,10 +9,13 @@ import es.borjavg.thingiverse.features.main.ui.models.ThingModel
 import es.borjavg.thingiverse.ui.common.DefaultItemCallback
 import es.borjavg.thingiverse.ui.common.ImageLoader
 
-class ThingsAdapter(private val imageLoader: ImageLoader) :
-    ListAdapter<ThingModel, MovieViewHolder>(DefaultItemCallback<ThingModel>()) {
+class ThingsAdapter(
+    private val imageLoader: ImageLoader,
+    private val onItemClickListener: (ThingModel) -> Unit
+) :
+    ListAdapter<ThingModel, ThingsAdapter.ThingsViewHolder>(DefaultItemCallback<ThingModel>()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MovieViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ThingsViewHolder(
         ItemThingBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -20,7 +23,7 @@ class ThingsAdapter(private val imageLoader: ImageLoader) :
         )
     )
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ThingsViewHolder, position: Int) {
         val item = getItem(position)
 
         with(holder.binding) {
@@ -29,6 +32,13 @@ class ThingsAdapter(private val imageLoader: ImageLoader) :
             imageLoader.load(url = item.thumbUrl, into = imageView)
         }
     }
-}
 
-class MovieViewHolder(val binding: ItemThingBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ThingsViewHolder(val binding: ItemThingBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                onItemClickListener(getItem(adapterPosition))
+            }
+        }
+    }
+}

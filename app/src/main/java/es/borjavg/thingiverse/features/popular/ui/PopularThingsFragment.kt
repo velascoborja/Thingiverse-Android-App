@@ -12,8 +12,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.borjavg.thingiverse.databinding.FragmentPopularThingsBinding
 import es.borjavg.thingiverse.features.popular.presentation.PopularThingsViewModel
 import es.borjavg.thingiverse.features.popular.presentation.PopularThingsViewModelFactory
-import es.borjavg.thingiverse.ui.common.ImageLoader
-import es.borjavg.thingiverse.ui.common.switchVisibility
+import es.borjavg.thingiverse.features.popular.presentation.PopularViewAction
+import es.borjavg.thingiverse.features.popular.presentation.PopularViewIntent
+import es.borjavg.thingiverse.ui.common.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -36,7 +37,10 @@ class PopularThingsFragment : Fragment() {
     ) = FragmentPopularThingsBinding.inflate(layoutInflater, container, false).also { binding ->
 
         with(binding) {
-            adapter = ThingsAdapter(imageLoader)
+            adapter = ThingsAdapter(imageLoader) {
+                viewModel.sendIntent(PopularViewIntent.OnThingClick(it))
+            }
+
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
         }
@@ -44,17 +48,24 @@ class PopularThingsFragment : Fragment() {
         viewModel.viewState.observe(viewLifecycleOwner) {
             with(binding) {
                 recyclerView.switchVisibility(it.isLoading.not())
-                animationView.switchVisibility(it.isLoading)
+                successAnimationView.switchVisibility(it.isLoading)
                 adapter?.submitList(it.items)
             }
         }
 
         viewModel.viewErrors.observe(viewLifecycleOwner) {
-            // TODO: 12/11/21 Show error
+            with(binding) {
+                recyclerView.gone()
+                successAnimationView.gone()
+                errorAnimationView.visible()
+                errorAnimationView.playAnimation()
+            }
         }
 
-        viewModel.viewActions.observe(viewLifecycleOwner) {
-            // TODO Show actions
+        viewModel.viewActions.observe(viewLifecycleOwner) { action ->
+            when (action) {
+                is PopularViewAction.OpenThingDetail -> requireContext().openUrl(action.url)
+            }
         }
 
         viewModel.load()

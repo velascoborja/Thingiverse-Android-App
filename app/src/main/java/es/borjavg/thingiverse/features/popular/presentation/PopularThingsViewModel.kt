@@ -1,5 +1,6 @@
 package es.borjavg.thingiverse.features.popular.presentation
 
+import es.borjavg.domain.models.Thing
 import es.borjavg.domain.usecases.GetPopularThingsUseCase
 import es.borjavg.presentation.*
 import es.borjavg.thingiverse.features.main.ui.models.ThingModel
@@ -10,12 +11,13 @@ data class PopularViewState(
     val items: List<ThingModel> = emptyList()
 ) : ViewState
 
-sealed class PopularViewAction : ViewAction
-
-sealed class PopularViewIntent : ViewIntent {
-    object OnThingClick : PopularViewIntent()
+sealed class PopularViewAction : ViewAction {
+    class OpenThingDetail(val url: String) : PopularViewAction()
 }
 
+sealed class PopularViewIntent : ViewIntent {
+    class OnThingClick(val thingModel: ThingModel) : PopularViewIntent()
+}
 
 class PopularThingsViewModel(
     private val getPopularThingsUseCase: GetPopularThingsUseCase,
@@ -27,11 +29,11 @@ class PopularThingsViewModel(
         get() = PopularViewState()
 
     override fun sendIntent(intent: PopularViewIntent) = when (intent) {
-        PopularViewIntent.OnThingClick -> handleDetailSelected()
+        is PopularViewIntent.OnThingClick -> handleDetailSelected(intent.thingModel)
     }
 
-    private fun handleDetailSelected() {
-        TODO("Handle thing click ❤️")
+    private fun handleDetailSelected(thingModel: ThingModel) {
+        dispatchAction(PopularViewAction.OpenThingDetail(thingModel.detailUrl))
     }
 
     override fun load() {
