@@ -1,13 +1,15 @@
 package es.borjavg.thingiverse
 
+import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.jakewharton.espresso.OkHttp3IdlingResource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +24,8 @@ import es.borjavg.thingiverse.util.MockServerDispatcher
 import es.borjavg.thingiverse.util.launchFragmentInHiltContainer
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
+import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -45,11 +49,19 @@ class PopularThingsFragmentTest {
 
     @Before
     fun setUp() {
+        Intents.init()
+
         hiltRule.inject()
         mockWebServer = MockWebServer()
         mockWebServer.dispatcher = MockServerDispatcher().RequestDispatcher()
         mockWebServer.start(8080)
-        IdlingRegistry.getInstance().register(OkHttp3IdlingResource.create("OkHttp", okHttpClient))
+    }
+
+    @After
+    fun tearDown() {
+        Intents.release()
+
+        mockWebServer.shutdown()
     }
 
     @Test
@@ -57,7 +69,7 @@ class PopularThingsFragmentTest {
         //Launch fragment
         launchFragmentInHiltContainer<PopularThingsFragment> {}
 
-        //Click on first article
+        //Click on second thing
         onView(withId(R.id.recyclerView)).perform(
             actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 1,
@@ -65,14 +77,10 @@ class PopularThingsFragmentTest {
             )
         )
 
-        //TODO Check that it navigates to Detail screen
+        //Check thing opens
+        intended(allOf(hasAction(equalTo(Intent.ACTION_VIEW))))
     }
 
-
-    @After
-    fun tearDown() {
-        mockWebServer.shutdown()
-    }
 
     @Module
     @InstallIn(SingletonComponent::class)

@@ -10,5 +10,6 @@ class ThingsRepositoryImpl @Inject constructor(
     private val thingsApiDataSource: ThingsApiDataSource
 ) : ThingsRepository {
 
-    override suspend fun getPopularThings(): Either<List<Thing>> = thingsApiDataSource.getPopularThings()
+    override suspend fun getPopularThings(): Either<List<Thing>> =
+        thingsApiDataSource.getPopularThings()
 }

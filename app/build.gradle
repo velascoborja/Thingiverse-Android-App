@@ -105,4 +105,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hiltVersion"
 
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
+
 }
