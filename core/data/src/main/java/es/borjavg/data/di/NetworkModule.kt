@@ -50,10 +50,4 @@ class NetworkModule {
                 it.setLevel(HttpLoggingInterceptor.Level.HEADERS)
             })
         }.build()
-
-    @Provides
-    @BaseUrl
-    @Singleton
-    fun provideBaseUrl() = BuildConfig.API_BASE_URL
-
 }
