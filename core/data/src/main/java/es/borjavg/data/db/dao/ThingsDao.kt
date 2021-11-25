@@ -9,16 +9,16 @@ import es.borjavg.data.db.model.ThingEntity
 @Dao
 interface ThingsDao {
 
-    @Query("SELECT * FROM ThingEntity")
-    fun getAll(): List<ThingEntity>
+    @Query("SELECT * FROM thingentity")
+    suspend fun getAll(): List<ThingEntity>
 
-    @Query("SELECT * FROM ThingEntity WHERE id LIKE :id LIMIT 1")
-    fun getThingById(id: String): ThingEntity
+    @Query("SELECT * FROM thingentity WHERE id LIKE :id LIMIT 1")
+    suspend fun getThingById(id: String): ThingEntity
 
     @Insert
-    fun insertAll(vararg thingEntity: ThingEntity)
+    suspend fun insertAll(vararg thingEntity: ThingEntity)
 
     @Delete
-    fun delete(thingEntity: ThingEntity)
+    suspend fun delete(thingEntity: ThingEntity)
 
 }
