@@ -11,7 +11,6 @@ import javax.inject.Inject
 class ImageLoader @Inject constructor(
     @ActivityContext private val context: Context,
 ) {
-
     fun load(url: String, into: ImageView) {
         Glide.with(context)
             .load(url)

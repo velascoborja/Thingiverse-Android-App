@@ -13,6 +13,7 @@ import es.borjavg.thingiverse.features.popular.presentation.PopularThingsViewMod
 import es.borjavg.thingiverse.features.popular.presentation.PopularViewAction
 import es.borjavg.thingiverse.features.popular.presentation.PopularViewIntent
 import es.borjavg.thingiverse.features.popular.presentation.PopularViewState
+import kotlinx.coroutines.flow.flowOf
 import org.junit.Assert
 import org.junit.Test
 
@@ -78,12 +79,14 @@ class PopularViewModelTests : BaseViewModelTests() {
         )
     }
 
+    private val likedMockData = listOf(mockData.random())
+
     private fun buildViewModel(thingsResponse: Either<List<Thing>> = Right(mockData)) =
         PopularThingsViewModel(
             getPopularThingsUseCase = mock { onBlocking { invoke() } doReturn (thingsResponse) },
             saveLikedThingUseCase = mock { onBlocking { invoke(any()) } doReturn Right(Unit) },
             removeLikedThingUseCase = mock { onBlocking { invoke(any()) } doReturn Right(Unit) },
-            getLikedThingsUseCase = mock { onBlocking { invoke() } doReturn (thingsResponse) },
+            getLikedThingsUseCase = mock { onBlocking { invoke() } doReturn flowOf(likedMockData) },
             dispatchers = dispatchers
         )
 }

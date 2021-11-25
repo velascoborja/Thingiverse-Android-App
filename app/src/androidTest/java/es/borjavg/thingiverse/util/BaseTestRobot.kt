@@ -5,7 +5,6 @@ import androidx.annotation.IdRes
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
@@ -20,7 +19,7 @@ import org.hamcrest.CoreMatchers.instanceOf
 open class BaseTestRobot {
 
     fun clickButton(resId: Int): ViewInteraction =
-        onView((withId(resId))).perform(ViewActions.click())
+        onView((withId(resId))).perform(click())
 
     fun clickListItem(listRes: Int, position: Int) {
         onView(withId(listRes)).perform(

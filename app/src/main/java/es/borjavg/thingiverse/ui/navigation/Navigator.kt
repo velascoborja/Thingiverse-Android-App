@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import es.borjavg.thingiverse.R
 import java.lang.ref.WeakReference
-import java.util.Stack
+import java.util.*
 import kotlin.reflect.KClass
 
 interface NavigatorOwner {
@@ -119,9 +119,4 @@ class NavigatorImpl(
             safePop()
         }
     }
-}
-
-interface OnBackPressedHandler {
-
-    fun onBackPressed(onContinue: () -> Unit)
 }
