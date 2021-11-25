@@ -12,12 +12,12 @@ data class ThingModel(
     val liked: Boolean
 )
 
-fun Thing.toPresentation() = ThingModel(
+fun Thing.toPresentation(liked: Boolean) = ThingModel(
     thumbUrl = thumb,
     name = name,
     clickable = publicUrl.isNullOrBlank().not(),
     id = id,
     detailUrl = publicUrl.orEmpty(),
     commentCount = "💬 $commentCount",
-    liked = false
+    liked = liked
 )

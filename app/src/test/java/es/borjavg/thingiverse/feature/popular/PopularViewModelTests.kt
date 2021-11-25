@@ -58,7 +58,7 @@ class PopularViewModelTests : BaseViewModelTests() {
         val viewModel = buildViewModel()
         val observer = mock<Observer<PopularViewAction>>()
         val captor = argumentCaptor<PopularViewAction>()
-        val thingModel = mockData.first().toPresentation()
+        val thingModel = mockData.first().toPresentation(likedThings.firstOrNull { it.id == it.id })
         viewModel.viewActions.observeForever(observer)
 
         viewModel.load()

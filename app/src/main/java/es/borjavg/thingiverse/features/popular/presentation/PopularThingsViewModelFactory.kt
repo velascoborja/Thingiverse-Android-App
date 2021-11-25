@@ -1,5 +1,6 @@
 package es.borjavg.thingiverse.features.popular.presentation
 
+import es.borjavg.domain.usecases.GetLikedThingsUseCase
 import es.borjavg.domain.usecases.GetPopularThingsUseCase
 import es.borjavg.domain.usecases.RemoveLikedThingUseCase
 import es.borjavg.domain.usecases.SaveLikedThingUseCase
@@ -11,13 +12,15 @@ class PopularThingsViewModelFactory @Inject constructor(
     private val dispatchers: CoroutinesDispatchers,
     private val getPopularThingsUseCase: GetPopularThingsUseCase,
     private val saveLikedThingUseCase: SaveLikedThingUseCase,
-    private val removeLikedThingUseCase: RemoveLikedThingUseCase
+    private val removeLikedThingUseCase: RemoveLikedThingUseCase,
+    private val getLikedThingsUseCase: GetLikedThingsUseCase
 ) : ViewModelFactory<PopularThingsViewModel>() {
 
     override fun create() = PopularThingsViewModel(
         getPopularThingsUseCase = getPopularThingsUseCase,
         saveLikedThingUseCase = saveLikedThingUseCase,
         removeLikedThingUseCase = removeLikedThingUseCase,
+        getLikedThingsUseCase = getLikedThingsUseCase,
         dispatchers = dispatchers
     )
 }

@@ -1,12 +1,15 @@
 package es.borjavg.thingiverse.features.popular.presentation
 
+import es.borjavg.domain.extensions.zip
 import es.borjavg.domain.models.Thing
+import es.borjavg.domain.usecases.GetLikedThingsUseCase
 import es.borjavg.domain.usecases.GetPopularThingsUseCase
 import es.borjavg.domain.usecases.RemoveLikedThingUseCase
 import es.borjavg.domain.usecases.SaveLikedThingUseCase
 import es.borjavg.presentation.*
 import es.borjavg.thingiverse.features.main.ui.models.ThingModel
 import es.borjavg.thingiverse.features.main.ui.models.toPresentation
+import kotlinx.coroutines.async
 
 data class PopularViewState(
     val isLoading: Boolean = false,
@@ -26,6 +29,7 @@ class PopularThingsViewModel(
     private val getPopularThingsUseCase: GetPopularThingsUseCase,
     private val saveLikedThingUseCase: SaveLikedThingUseCase,
     private val removeLikedThingUseCase: RemoveLikedThingUseCase,
+    private val getLikedThingsUseCase: GetLikedThingsUseCase,
     dispatchers: CoroutinesDispatchers
 ) :
     LoaderViewModel<PopularViewState, PopularViewAction, PopularViewIntent>(dispatchers) {
@@ -69,13 +73,24 @@ class PopularThingsViewModel(
     override fun load() {
         launch {
             setState { copy(isLoading = true) }
-            getPopularThingsUseCase().fold({ things ->
-                thingList = things
-                setState { copy(isLoading = false, items = things.map { it.toPresentation() }) }
-            }, {
-                dispatchError(Throwable())
-                setState { copy(isLoading = false) }
-            })
+
+            zip(
+                async { getLikedThingsUseCase() },
+                async { getPopularThingsUseCase() }
+            ) { likedEither, popularEither ->
+
+                popularEither.fold({ popularThings ->
+                    thingList = popularThings
+                    val likedThings = likedEither.rightOrNull().orEmpty()
+                    val mergedThings = popularThings.map { popularThing ->
+                        popularThing.toPresentation(likedThings.any { it.id == popularThing.id })
+                    }
+                    setState { copy(isLoading = false, items = mergedThings) }
+                }, {
+                    dispatchError(Throwable())
+                    setState { copy(isLoading = false) }
+                })
+            }
         }
     }
 }
