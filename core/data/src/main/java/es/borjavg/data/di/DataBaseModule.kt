@@ -15,12 +15,17 @@ class DataBaseModule {
 
     @Provides
     @Singleton
-    fun provideThingsDatabase(applicationContext: Application): ThingsDatabase {
-        return Room.databaseBuilder(
-            applicationContext,
-            ThingsDatabase::class.java, "things_database"
-        ).build()
-    }
+    fun provideThingsDatabase(
+        applicationContext: Application,
+        @DbName dbName: String
+    ) = Room.databaseBuilder(
+        applicationContext,
+        ThingsDatabase::class.java, dbName
+    ).build()
 
+    @Provides
+    @Singleton
+    @DbName
+    fun provideThingDbName(): String = "things_database"
 }
 

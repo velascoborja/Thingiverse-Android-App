@@ -9,6 +9,7 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.intent.Intents
 import com.jakewharton.espresso.OkHttp3IdlingResource
 import dagger.hilt.android.testing.HiltAndroidRule
+import es.borjavg.data.di.DbName
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
@@ -21,6 +22,10 @@ abstract class BaseUiTest {
 
     @Inject
     lateinit var okHttpClient: OkHttpClient
+
+    @Inject
+    @DbName
+    lateinit var dbName: String
 
     @get:Rule
     abstract val hiltRule: HiltAndroidRule
@@ -38,6 +43,8 @@ abstract class BaseUiTest {
         mockWebServer.dispatcher = MockServerDispatcher().RequestDispatcher()
         mockWebServer.start(8080)
         IdlingRegistry.getInstance().register(idlingResource)
+
+        ApplicationProvider.getApplicationContext<Context>().deleteDatabase(dbName)
     }
 
     @After
