@@ -7,13 +7,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import es.borjavg.thingiverse.R
 import es.borjavg.thingiverse.databinding.FragmentLikesBinding
 import es.borjavg.thingiverse.features.likes.presentation.LikesViewAction
 import es.borjavg.thingiverse.features.likes.presentation.LikesViewIntent
 import es.borjavg.thingiverse.features.likes.presentation.LikesViewModel
 import es.borjavg.thingiverse.features.likes.presentation.LikesViewModelFactory
 import es.borjavg.thingiverse.features.popular.ui.ThingsAdapter
-import es.borjavg.thingiverse.ui.common.*
+import es.borjavg.thingiverse.ui.common.ImageLoader
+import es.borjavg.thingiverse.ui.common.openUrl
+import es.borjavg.thingiverse.ui.common.switchVisibility
+import es.borjavg.thingiverse.ui.common.toast
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -59,10 +63,7 @@ class LikesFragment : Fragment() {
         }
 
         viewModel.viewErrors.observe(viewLifecycleOwner) {
-            with(binding) {
-                recyclerView.gone()
-                emptyView.visible()
-            }
+            toast(R.string.remove_like_error)
         }
 
         viewModel.viewActions.observe(viewLifecycleOwner) { action ->

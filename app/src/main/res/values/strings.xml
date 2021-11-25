@@ -3,4 +3,5 @@
     <string name="menu_popular">Popular</string>
     <string name="menu_likes">Likes</string>
     <string name="menu_makes">Makes</string>
+    <string name="remove_like_error">Couldn\'t remove that like</string>
 </resources>
