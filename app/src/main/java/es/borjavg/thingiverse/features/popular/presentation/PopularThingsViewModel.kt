@@ -18,6 +18,7 @@ sealed class PopularViewAction : ViewAction {
 
 sealed class PopularViewIntent : ViewIntent {
     class OnThingClick(val thingModel: ThingModel) : PopularViewIntent()
+    class OnLikeThingClick(val thingModel: ThingModel) : PopularViewIntent()
 }
 
 class PopularThingsViewModel(
@@ -33,8 +34,30 @@ class PopularThingsViewModel(
         get() = PopularViewState()
 
     override fun sendIntent(intent: PopularViewIntent) = when (intent) {
-        is PopularViewIntent.OnThingClick -> {
-            handleDetailSelected(intent.thingModel)
+        is PopularViewIntent.OnThingClick -> handleDetailSelected(intent.thingModel)
+        is PopularViewIntent.OnLikeThingClick -> handleLikedThing(intent.thingModel)
+    }
+
+    private fun handleLikedThing(thingModel: ThingModel) {
+        val previousModel = getState().items.first { it.id == thingModel.id }
+
+        if (previousModel.liked != thingModel.liked) {
+            if (thingModel.liked) saveLikedThing(thingModel)
+            else removeLikedThing(thingModel)
+        }
+    }
+
+    private fun removeLikedThing(thingModel: ThingModel) {
+        TODO("Not yet implemented")
+    }
+
+    private fun saveLikedThing(thingModel: ThingModel) {
+        launch {
+            val thing = thingList.first { it.id == thingModel.id }
+            val saved = saveLikedThingsUseCase(thing).rightOrNull() != null
+            val updatedItems =
+                getState().items.map { if (it.id == thingModel.id) it.copy(liked = saved) else it }
+            setState { copy(items = updatedItems) }
         }
     }
 

@@ -26,7 +26,7 @@ class PopularThingsFragment : Fragment() {
 
     private val viewModel: PopularThingsViewModel by viewModels { viewModelFactory }
 
-    var adapter: ThingsAdapter? = null
+    private var adapter: ThingsAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,9 +35,15 @@ class PopularThingsFragment : Fragment() {
     ) = FragmentPopularThingsBinding.inflate(layoutInflater, container, false).also { binding ->
 
         with(binding) {
-            adapter = ThingsAdapter(imageLoader) {
-                viewModel.sendIntent(PopularViewIntent.OnThingClick(it))
-            }
+            adapter = ThingsAdapter(
+                imageLoader = imageLoader,
+                onItemClickListener = {
+                    viewModel.sendIntent(PopularViewIntent.OnThingClick(it))
+                },
+                onItemLikeChanged = {
+                    viewModel.sendIntent(PopularViewIntent.OnLikeThingClick(it))
+                }
+            )
 
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter

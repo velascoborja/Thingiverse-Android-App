@@ -8,7 +8,8 @@ data class ThingModel(
     val name: String,
     val commentCount: String,
     val clickable: Boolean,
-    val detailUrl: String
+    val detailUrl: String,
+    val liked: Boolean
 )
 
 fun Thing.toPresentation() = ThingModel(
@@ -17,5 +18,6 @@ fun Thing.toPresentation() = ThingModel(
     clickable = publicUrl.isNullOrBlank().not(),
     id = id,
     detailUrl = publicUrl.orEmpty(),
-    commentCount = "💬 $commentCount"
+    commentCount = "💬 $commentCount",
+    liked = false
 )
