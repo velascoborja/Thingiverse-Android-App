@@ -34,19 +34,12 @@ class PopularThingsViewModel(
 
     override fun sendIntent(intent: PopularViewIntent) = when (intent) {
         is PopularViewIntent.OnThingClick -> {
-
-            launch {
-                val selectedThing = thingList.first { it.id == intent.thingModel.id }
-                saveLikedThingsUseCase(selectedThing)
-            }
-
-
             handleDetailSelected(intent.thingModel)
         }
     }
 
     private fun handleDetailSelected(thingModel: ThingModel) {
-        /*dispatchAction(PopularViewAction.OpenThingDetail(thingModel.detailUrl))*/
+        dispatchAction(PopularViewAction.OpenThingDetail(thingModel.detailUrl))
     }
 
     override fun load() {

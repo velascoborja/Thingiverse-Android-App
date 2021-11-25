@@ -1,21 +1,18 @@
 package es.borjavg.data.db.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import es.borjavg.data.db.model.ThingEntity
 
 @Dao
 interface ThingsDao {
 
-    @Query("SELECT * FROM thingentity")
+    @Query("SELECT * FROM ThingEntity")
     suspend fun getAll(): List<ThingEntity>
 
-    @Query("SELECT * FROM thingentity WHERE id LIKE :id LIMIT 1")
+    @Query("SELECT * FROM ThingEntity WHERE id LIKE :id LIMIT 1")
     suspend fun getThingById(id: String): ThingEntity
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg thingEntity: ThingEntity)
 
     @Delete
