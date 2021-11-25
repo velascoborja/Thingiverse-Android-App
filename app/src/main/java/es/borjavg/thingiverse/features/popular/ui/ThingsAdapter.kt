@@ -28,7 +28,7 @@ class ThingsAdapter(
 
         with(holder.binding) {
             title.text = item.name
-            likeCount.text = item.likeCount
+            commentCount.text = item.commentCount
             imageLoader.load(url = item.thumbUrl, into = imageView)
         }
     }

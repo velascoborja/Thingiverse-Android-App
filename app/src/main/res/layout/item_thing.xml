@@ -6,9 +6,9 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="18dp"
     android:layout_marginTop="18dp"
-    android:foreground="?selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
+    android:foreground="?selectableItemBackground"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp">
@@ -23,16 +23,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:textAppearance="@android:style/TextAppearance.Material.Title"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/checkboxLike"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/imageView"
             tools:text="Título de la película" />
 
         <TextView
-            android:id="@+id/likeCount"
+            android:id="@+id/commentCount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@+id/title"
@@ -43,9 +47,20 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:contentDescription="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
+
+        <CheckBox
+            android:id="@+id/checkboxLike"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:button="@drawable/selector_like_checkbox"
+            android:buttonTint="?colorPrimary"
+            android:src="@drawable/ic_likes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

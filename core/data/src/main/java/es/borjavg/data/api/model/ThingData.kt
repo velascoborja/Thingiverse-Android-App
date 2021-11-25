@@ -7,7 +7,7 @@ data class ThingData(
     @SerializedName("id") val id: String?,
     @SerializedName("name") val name: String?,
     @SerializedName("public_url") val publicUrl: String?,
-    @SerializedName("like_count") val likeCount: Int?,
+    @SerializedName("comment_count") val commentCount: Int?,
     @SerializedName("thumbnail") val thumbnail: String?,
 )
 
@@ -15,6 +15,6 @@ fun ThingData.toDomain() = Thing(
     id = id.orEmpty(),
     thumb = thumbnail.orEmpty(),
     name = name.orEmpty(),
-    likeCount = likeCount ?: 0,
+    commentCount = commentCount ?: 0,
     publicUrl = publicUrl
 )

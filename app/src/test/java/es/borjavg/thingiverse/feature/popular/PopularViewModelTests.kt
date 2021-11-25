@@ -73,7 +73,7 @@ class PopularViewModelTests : BaseViewModelTests() {
             id = "Id$index",
             thumb = "thumbnail",
             name = "Name$index",
-            likeCount = index,
+            commentCount = index,
             publicUrl = "https://example.org"
         )
     }
@@ -81,6 +81,7 @@ class PopularViewModelTests : BaseViewModelTests() {
     private fun buildViewModel(thingsResponse: Either<List<Thing>> = Right(mockData)) =
         PopularThingsViewModel(
             getPopularThingsUseCase = mock { onBlocking { invoke() } doReturn (thingsResponse) },
+            saveLikedThingsUseCase = mock { onBlocking { invoke(any()) } doReturn Right(Unit) },
             dispatchers = dispatchers
         )
 }

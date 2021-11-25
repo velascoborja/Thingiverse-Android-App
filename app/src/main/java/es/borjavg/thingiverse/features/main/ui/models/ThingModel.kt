@@ -6,7 +6,7 @@ data class ThingModel(
     val id: String,
     val thumbUrl: String,
     val name: String,
-    val likeCount: String,
+    val commentCount: String,
     val clickable: Boolean,
     val detailUrl: String
 )
@@ -17,5 +17,5 @@ fun Thing.toPresentation() = ThingModel(
     clickable = publicUrl.isNullOrBlank().not(),
     id = id,
     detailUrl = publicUrl.orEmpty(),
-    likeCount = "❤️ $likeCount"
+    commentCount = " $commentCount"
 )

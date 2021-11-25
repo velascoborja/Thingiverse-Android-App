@@ -6,7 +6,7 @@ fun ThingEntity.toDomain() = Thing(
     id = id,
     thumb = thumb.orEmpty(),
     name = name.orEmpty(),
-    likeCount = likeCount ?: 0,
+    commentCount = commentCount ?: 0,
     publicUrl = publicUrl
 )
 
@@ -14,6 +14,6 @@ fun Thing.toEntity() = ThingEntity(
     id = id,
     thumb = thumb,
     name = name,
-    likeCount = likeCount,
+    commentCount = commentCount,
     publicUrl = publicUrl
 )
