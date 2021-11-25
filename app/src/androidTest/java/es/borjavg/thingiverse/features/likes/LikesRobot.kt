@@ -6,5 +6,5 @@ import es.borjavg.thingiverse.util.BaseTestRobot
 class LikesRobot : BaseTestRobot() {
     fun matchEmptyView() = matchVisible(R.id.emptyView)
     fun clickLikesMenu() = clickButton(R.id.menu_item_likes)
-    fun matchItemLiked() = matchRecyclerViewNotEmpty(R.id.recyclerView)
+    fun matchItemLiked() = matchRecyclerViewSize(R.id.recyclerView)
 }

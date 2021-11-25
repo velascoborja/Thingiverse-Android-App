@@ -38,7 +38,7 @@ class LikesFragmentTest : BaseUiTest() {
         }
     }
 
-    private fun likes(func: LikesRobot.() -> Unit) = LikesRobot().apply {
+    fun likes(func: LikesRobot.() -> Unit) = LikesRobot().apply {
         launchActivity<MainActivity>()
         func()
     }

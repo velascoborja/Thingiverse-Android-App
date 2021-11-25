@@ -42,6 +42,7 @@ abstract class BaseUiTest {
         mockWebServer = MockWebServer()
         mockWebServer.dispatcher = MockServerDispatcher().RequestDispatcher()
         mockWebServer.start(8080)
+
         IdlingRegistry.getInstance().register(idlingResource)
 
         ApplicationProvider.getApplicationContext<Context>().deleteDatabase(dbName)

@@ -52,7 +52,7 @@ open class BaseTestRobot {
         onView(withId(resId)).check(matches(isDisplayed()))
     }
 
-    fun matchRecyclerViewNotEmpty(@IdRes listId: Int) {
+    fun matchRecyclerViewSize(@IdRes listId: Int) {
         onView(withId(listId)).check(RecyclerViewPopulatedAssertion())
     }
 
