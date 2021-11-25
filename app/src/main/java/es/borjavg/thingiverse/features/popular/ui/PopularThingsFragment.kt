@@ -46,7 +46,7 @@ class PopularThingsFragment : Fragment() {
         viewModel.viewState.observe(viewLifecycleOwner) {
             with(binding) {
                 recyclerView.switchVisibility(it.isLoading.not())
-                successAnimationView.switchVisibility(it.isLoading)
+                loadingAnimationView.switchVisibility(it.isLoading)
                 adapter?.submitList(it.items)
             }
         }
@@ -54,7 +54,7 @@ class PopularThingsFragment : Fragment() {
         viewModel.viewErrors.observe(viewLifecycleOwner) {
             with(binding) {
                 recyclerView.gone()
-                successAnimationView.gone()
+                loadingAnimationView.gone()
                 errorAnimationView.visible()
                 errorAnimationView.playAnimation()
             }

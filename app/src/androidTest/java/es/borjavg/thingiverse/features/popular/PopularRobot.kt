@@ -5,6 +5,9 @@ import es.borjavg.thingiverse.R
 import es.borjavg.thingiverse.util.BaseTestRobot
 
 class PopularRobot : BaseTestRobot() {
-    fun clickThing(itemIndex: Int) = clickListItem(R.id.recyclerView, itemIndex)
-    fun checkThingDetailOpens() = matchIntent(Intent.ACTION_VIEW)
+    fun selectPopularTab() = clickButton(R.id.menu_item_popular)
+    fun clickFirstThing() = clickListItem(R.id.recyclerView, 0)
+    fun matchThingDetailOpens() = matchIntent(Intent.ACTION_VIEW)
+    fun matchErrorVisible() = matchVisible(R.id.error_animation_view)
+    fun matchLoadingVisible() = matchVisible(R.id.loading_animation_view)
 }
