@@ -17,5 +17,5 @@ fun Thing.toPresentation() = ThingModel(
     clickable = publicUrl.isNullOrBlank().not(),
     id = id,
     detailUrl = publicUrl.orEmpty(),
-    commentCount = " $commentCount"
+    commentCount = "💬 $commentCount"
 )
