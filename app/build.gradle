@@ -96,7 +96,7 @@ dependencies {
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hiltVersion"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hiltVersion"
 
-    androidTestImplementation "androidx.test.ext:junit:$androidTestJUnitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidTestJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoCoreVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoCoreVersion"
