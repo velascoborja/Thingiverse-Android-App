@@ -58,7 +58,7 @@ class PopularViewModelTests : BaseViewModelTests() {
         val viewModel = buildViewModel()
         val observer = mock<Observer<PopularViewAction>>()
         val captor = argumentCaptor<PopularViewAction>()
-        val thingModel = mockData.first().toPresentation(likedThings.firstOrNull { it.id == it.id })
+        val thingModel = mockData.first().toPresentation(true) // FIXME
         viewModel.viewActions.observeForever(observer)
 
         viewModel.load()
@@ -81,7 +81,9 @@ class PopularViewModelTests : BaseViewModelTests() {
     private fun buildViewModel(thingsResponse: Either<List<Thing>> = Right(mockData)) =
         PopularThingsViewModel(
             getPopularThingsUseCase = mock { onBlocking { invoke() } doReturn (thingsResponse) },
-            saveLikedThingsUseCase = mock { onBlocking { invoke(any()) } doReturn Right(Unit) },
+            saveLikedThingUseCase = mock { onBlocking { invoke(any()) } doReturn Right(Unit) },
+            removeLikedThingUseCase = mock { onBlocking { invoke(any()) } doReturn Right(Unit) },
+            getLikedThingsUseCase = mock { onBlocking { invoke() } doReturn (thingsResponse) },
             dispatchers = dispatchers
         )
 }

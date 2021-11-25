@@ -10,6 +10,7 @@ import es.borjavg.presentation.*
 import es.borjavg.thingiverse.features.main.ui.models.ThingModel
 import es.borjavg.thingiverse.features.main.ui.models.toPresentation
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.firstOrNull
 
 data class PopularViewState(
     val isLoading: Boolean = false,
@@ -76,11 +77,11 @@ class PopularThingsViewModel(
             zip(
                 async { getLikedThingsUseCase() },
                 async { getPopularThingsUseCase() }
-            ) { likedEither, popularEither ->
+            ) { likeFlow, popularEither ->
 
                 popularEither.fold({ popularThings ->
                     thingList = popularThings
-                    val likedThings = likedEither.rightOrNull().orEmpty()
+                    val likedThings = likeFlow.firstOrNull().orEmpty()
                     val mergedThings = popularThings.map { popularThing ->
                         popularThing.toPresentation(likedThings.any { it.id == popularThing.id })
                     }

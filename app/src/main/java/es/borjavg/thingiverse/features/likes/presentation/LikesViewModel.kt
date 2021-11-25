@@ -6,6 +6,7 @@ import es.borjavg.domain.usecases.RemoveLikedThingUseCase
 import es.borjavg.presentation.*
 import es.borjavg.thingiverse.features.main.ui.models.ThingModel
 import es.borjavg.thingiverse.features.main.ui.models.toPresentation
+import kotlinx.coroutines.flow.collect
 
 data class LikesViewState(
     val items: List<ThingModel> = emptyList()
@@ -44,22 +45,16 @@ class LikesViewModel(
 
         launch {
             val thing = thingList.first { it.id == thingModel.id }
-            removeLikedThingUseCase(thing).fold({
-                setState { copy(items = getState().items.filter { it.id != thing.id }) }
-            }, { dispatchError(it) })
+            removeLikedThingUseCase(thing)
         }
     }
 
     override fun load() {
         launch {
-            getLikedThingsUseCase().fold({ likedThings ->
+            getLikedThingsUseCase().collect { likedThings ->
                 thingList = likedThings
                 setState { copy(items = likedThings.map { it.toPresentation(true) }) }
-            }, {
-                dispatchError(Throwable())
-                setState { copy(items = emptyList()) }
-            })
+            }
         }
     }
-
 }

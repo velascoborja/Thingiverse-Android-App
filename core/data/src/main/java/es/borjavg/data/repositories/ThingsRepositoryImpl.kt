@@ -7,6 +7,7 @@ import es.borjavg.domain.Left
 import es.borjavg.domain.Right
 import es.borjavg.domain.models.Thing
 import es.borjavg.domain.repositories.ThingsRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ThingsRepositoryImpl @Inject constructor(
@@ -27,7 +28,5 @@ class ThingsRepositoryImpl @Inject constructor(
         Right(Unit)
     }.getOrElse { Left(Throwable()) }
 
-    override suspend fun getLikedThings(): Either<List<Thing>> = runCatching {
-        Right(thingsDbDataSource.getLikedThings())
-    }.getOrElse { Left(Throwable()) }
+    override fun getLikedThings(): Flow<List<Thing>> = thingsDbDataSource.getLikedThings()
 }
