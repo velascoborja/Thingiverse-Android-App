@@ -36,7 +36,7 @@ class LikesViewModelTests : BaseViewModelTests() {
 
         viewModel.load()
 
-        Assert.asserAtTrue(observer.lastValue.items.isNotEmpty())
+        Assert.assertTrue(observer.lastValue.items.isNotEmpty())
     }
 
     @Test
