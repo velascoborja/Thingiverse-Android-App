@@ -36,8 +36,7 @@ class PopularThingsViewModel(
 
     private var thingList: List<Thing> = emptyList()
 
-    override val initialViewState: PopularViewState
-        get() = PopularViewState()
+    override val initialViewState = PopularViewState()
 
     override fun sendIntent(intent: PopularViewIntent) = when (intent) {
         is PopularViewIntent.OnThingClick -> handleDetailSelected(intent.thingModel)
