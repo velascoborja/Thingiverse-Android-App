@@ -18,14 +18,27 @@ import org.hamcrest.CoreMatchers.instanceOf
 
 open class BaseTestRobot {
 
-    fun clickButton(resId: Int): ViewInteraction =
+    fun clickButton(@IdRes resId: Int): ViewInteraction =
         onView((withId(resId))).perform(click())
 
-    fun clickListItem(listRes: Int, position: Int) {
+    fun clickListItem(@IdRes listRes: Int, position: Int) {
         onView(withId(listRes)).perform(
             actionOnItemAtPosition<RecyclerView.ViewHolder>(
                 position,
                 click()
+            )
+        )
+    }
+
+    fun clickListItemChildView(
+        @IdRes listRes: Int,
+        @IdRes childViewId: Int,
+        position: Int
+    ) {
+        onView(withId(listRes)).perform(
+            actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                position,
+                clickChildViewWithId(childViewId)
             )
         )
     }
@@ -37,6 +50,10 @@ open class BaseTestRobot {
 
     fun matchVisible(@IdRes resId: Int) {
         onView(withId(resId)).check(matches(isDisplayed()))
+    }
+
+    fun matchRecyclerViewNotEmpty(@IdRes listId: Int) {
+        onView(withId(listId)).check(RecyclerViewPopulatedAssertion())
     }
 
     fun matchIntent(action: String) =

@@ -5,8 +5,8 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import es.borjavg.data.di.ApiUrlModule
-import es.borjavg.thingiverse.R
 import es.borjavg.thingiverse.features.main.ui.MainActivity
+import es.borjavg.thingiverse.features.popular.PopularRobot
 import es.borjavg.thingiverse.util.BaseUiTest
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,15 +19,35 @@ class LikesFragmentTest : BaseUiTest() {
     override val hiltRule = HiltAndroidRule(this)
 
     @Test
-    fun givenListOfThingsWhenOneIsSelectedThenDetailIsShown() {
+    fun given_EmptyViewWhen_NoItemsAreLikedThen_EmptyViewIsShown() {
         likes {
-            // TODO include test
+            clickLikesMenu()
+            matchEmptyView()
+        }
+    }
+
+    @Test
+    fun when_AThingIsLikedThen_ItIsListed() {
+        popular {
+            likeFirstThing()
+        }
+
+        likes {
+            clickLikesMenu()
+            matchItemLiked()
         }
     }
 
     private fun likes(func: LikesRobot.() -> Unit) = LikesRobot().apply {
         launchActivity<MainActivity>()
-        clickButton(R.id.menu_item_likes)
+        func()
+    }
+
+    private fun popular(func: PopularRobot.() -> Unit) = PopularRobot().apply {
+        launchActivity<MainActivity>()
+        selectPopularTab()
         func()
     }
 }
+
+

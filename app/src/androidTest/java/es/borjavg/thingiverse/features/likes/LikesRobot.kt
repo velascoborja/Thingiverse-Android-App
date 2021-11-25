@@ -1,7 +1,10 @@
 package es.borjavg.thingiverse.features.likes
 
+import es.borjavg.thingiverse.R
 import es.borjavg.thingiverse.util.BaseTestRobot
 
 class LikesRobot : BaseTestRobot() {
-    // TODO add stuff
+    fun matchEmptyView() = matchVisible(R.id.emptyView)
+    fun clickLikesMenu() = clickButton(R.id.menu_item_likes)
+    fun matchItemLiked() = matchRecyclerViewNotEmpty(R.id.recyclerView)
 }
