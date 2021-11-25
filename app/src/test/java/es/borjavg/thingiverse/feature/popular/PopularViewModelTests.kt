@@ -59,7 +59,7 @@ class PopularViewModelTests : BaseViewModelTests() {
         val viewModel = buildViewModel()
         val observer = mock<Observer<PopularViewAction>>()
         val captor = argumentCaptor<PopularViewAction>()
-        val thingModel = mockData.first().toPresentation(true) // FIXME
+        val thingModel = mockData.first().toPresentation(true)
         viewModel.viewActions.observeForever(observer)
 
         viewModel.load()
