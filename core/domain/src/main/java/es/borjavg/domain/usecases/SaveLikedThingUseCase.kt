@@ -5,12 +5,12 @@ import es.borjavg.domain.models.Thing
 import es.borjavg.domain.repositories.ThingsRepository
 import javax.inject.Inject
 
-interface SaveLikedThingsUseCase {
+interface SaveLikedThingUseCase {
     suspend operator fun invoke(thing: Thing): Either<Unit>
 
-    class SaveLikedThingsUseCaseImpl @Inject constructor(
+    class SaveLikedThingUseCaseImpl @Inject constructor(
         private val thingsRepository: ThingsRepository
-    ) : SaveLikedThingsUseCase {
+    ) : SaveLikedThingUseCase {
         override suspend fun invoke(thing: Thing): Either<Unit> =
             thingsRepository.saveLikedThing(thing)
     }

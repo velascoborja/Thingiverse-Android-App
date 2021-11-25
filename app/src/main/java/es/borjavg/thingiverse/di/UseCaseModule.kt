@@ -6,7 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.scopes.ActivityScoped
 import es.borjavg.domain.usecases.GetPopularThingsUseCase
-import es.borjavg.domain.usecases.SaveLikedThingsUseCase
+import es.borjavg.domain.usecases.RemoveLikedThingUseCase
+import es.borjavg.domain.usecases.SaveLikedThingUseCase
 
 @Module
 @InstallIn(ActivityComponent::class)
@@ -18,6 +19,9 @@ interface UseCaseModule {
 
     @ActivityScoped
     @Binds
-    fun provideLikeUseCase(impl: SaveLikedThingsUseCase.SaveLikedThingsUseCaseImpl): SaveLikedThingsUseCase
+    fun provideLikeUseCase(impl: SaveLikedThingUseCase.SaveLikedThingUseCaseImpl): SaveLikedThingUseCase
 
+    @ActivityScoped
+    @Binds
+    fun provideRemovedLikedThingsUseCase(impl: RemoveLikedThingUseCase.RemoveLikedThingUseCaseImpl): RemoveLikedThingUseCase
 }

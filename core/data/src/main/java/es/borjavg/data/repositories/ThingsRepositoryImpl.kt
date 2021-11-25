@@ -21,4 +21,9 @@ class ThingsRepositoryImpl @Inject constructor(
         thingsDbDataSource.saveLikedThing(thing)
         Right(Unit)
     }.getOrElse { Left(Throwable()) }
+
+    override suspend fun removeLikedThing(thing: Thing): Either<Unit> = runCatching {
+        thingsDbDataSource.removeLikedThing(thing)
+        Right(Unit)
+    }.getOrElse { Left(Throwable()) }
 }

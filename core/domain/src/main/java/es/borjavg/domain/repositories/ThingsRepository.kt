@@ -6,4 +6,5 @@ import es.borjavg.domain.models.Thing
 interface ThingsRepository {
     suspend fun getPopularThings(): Either<List<Thing>>
     suspend fun saveLikedThing(thing: Thing): Either<Unit>
+    suspend fun removeLikedThing(thing: Thing): Either<Unit>
 }

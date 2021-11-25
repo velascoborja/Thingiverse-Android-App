@@ -17,4 +17,8 @@ class ThingsDbDataSource @Inject constructor(
     suspend fun saveLikedThing(thing: Thing) {
         thingsDatabase.thingsDao().insertAll(thing.toEntity())
     }
+
+    suspend fun removeLikedThing(thing: Thing) {
+        thingsDatabase.thingsDao().delete(thing.toEntity())
+    }
 }
