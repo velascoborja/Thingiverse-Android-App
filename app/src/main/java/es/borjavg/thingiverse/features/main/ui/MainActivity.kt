@@ -1,7 +1,6 @@
 package es.borjavg.thingiverse.features.main.ui
 
 import android.os.Bundle
-import android.os.Handler
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -33,7 +32,10 @@ class MainActivity : FragmentActivity() {
 
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
+    private var splashScreen: SplashScreen? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
