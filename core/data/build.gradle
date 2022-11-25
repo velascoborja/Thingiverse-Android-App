@@ -2,6 +2,7 @@ apply from: "$rootDir/common-android-library.gradle"
 apply plugin: 'kotlin-kapt'
 
 android {
+    namespace 'es.borjavg.data'
 
     flavorDimensions "enviroment"
 
@@ -18,6 +19,7 @@ android {
         }
     }
 }
+
 dependencies {
     implementation project(':core:domain')
 

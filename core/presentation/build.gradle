@@ -1,5 +1,9 @@
 apply from: "$rootDir/common-android-library.gradle"
 
+android {
+    namespace 'es.borjavg.presentation'
+}
+
 dependencies {
     implementation project(':core:domain')
 
