@@ -11,11 +11,4 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesCoreVersion"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
     implementation "javax.inject:javax.inject:$javaxInjectVersion"
-
-
-
 }
-
-sourceCompatibility = "8"
-targetCompatibility = "8"
-

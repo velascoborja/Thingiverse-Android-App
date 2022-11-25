@@ -15,6 +15,8 @@ static def generateVersionCode() {
 }
 
 android {
+    namespace 'es.borjavg.thingiverse'
+
     compileSdk androidCompileSdkVersion
 
     defaultConfig {
