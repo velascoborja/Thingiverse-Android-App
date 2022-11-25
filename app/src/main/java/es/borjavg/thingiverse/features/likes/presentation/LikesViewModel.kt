@@ -6,7 +6,8 @@ import es.borjavg.domain.usecases.RemoveLikedThingUseCase
 import es.borjavg.presentation.*
 import es.borjavg.thingiverse.features.main.ui.models.ThingModel
 import es.borjavg.thingiverse.features.main.ui.models.toPresentation
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
 
 data class LikesViewState(
     val items: List<ThingModel> = emptyList()
@@ -40,9 +41,6 @@ class LikesViewModel(
         dispatchAction(LikesViewAction.OpenThingDetail(thingModel.detailUrl))
 
     private fun handleRemoveLike(thingModel: ThingModel) {
-        val previousModel = getState().items.first { it.id == thingModel.id }
-        if (previousModel.liked == thingModel.liked) return
-
         launch {
             val thing = thingList.first { it.id == thingModel.id }
             removeLikedThingUseCase(thing)
@@ -51,7 +49,7 @@ class LikesViewModel(
 
     override fun load() {
         launch {
-            getLikedThingsUseCase().collect { likedThings ->
+            getLikedThingsUseCase().collectLatest { likedThings ->
                 thingList = likedThings
                 setState { copy(items = likedThings.map { it.toPresentation(true) }) }
             }

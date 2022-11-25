@@ -45,24 +45,18 @@ class PopularThingsViewModel(
     }
 
     private fun handleLikedThing(thingModel: ThingModel) {
-        val previousModel = getState().items.first { it.id == thingModel.id }
+        launch {
+            val thing = thingList.first { it.id == thingModel.id }
+            val saved =
+                if (thingModel.liked) removeLikedThingUseCase(thing).rightOrNull() != null
+                else saveLikedThingUseCase(thing).rightOrNull() != null
 
-        if (previousModel.liked != thingModel.liked) {
-
-            launch {
-                val thing = thingList.first { it.id == thingModel.id }
-                val saved =
-                    if (thingModel.liked) saveLikedThingUseCase(thing).rightOrNull() != null
-                    else removeLikedThingUseCase(thing).rightOrNull() != null
-
-                val updatedItems = getState().items.map {
-                    if (it.id == thingModel.id && saved) it.copy(liked = thingModel.liked)
-                    else it
-                }
-
-                setState { copy(items = updatedItems) }
+            val updatedItems = getState().items.map {
+                if (it.id == thingModel.id && saved) it.copy(liked = !thingModel.liked)
+                else it
             }
 
+            setState { copy(items = updatedItems) }
         }
     }
 
