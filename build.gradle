@@ -3,15 +3,15 @@ buildscript {
 
     ext {
         //Android specific
-        androidCompileSdkVersion = 31
+        androidCompileSdkVersion = 33
         androidMinSdkVersion = 23
-        androidTargetSdkVersion = 31
+        androidTargetSdkVersion = 33
         androidBuildToolsVersion = "30.0.2"
 
         coreDesugaringVersion = '1.0.9'
-        kotlinVersion = '1.5.31'
+        kotlinVersion = '1.7.20'
         constraintLayoutVersion = "2.1.1"
-        androidCoreVersion = "1.7.0"
+        androidCoreVersion = "1.9.0"
         coroutinesCoreVersion = '1.5.0'
         lifecycleVersion = "2.4.0"
         javaxInjectVersion = "1"
@@ -23,13 +23,13 @@ buildscript {
         materialVersion = '1.4.0'
 
         //Dependencies
-        hiltVersion = '2.41'
+        hiltVersion = '2.44.2'
         coroutinesCoreVersion = '1.5.0'
-        appCompatVersion = "1.4.0"
+        appCompatVersion = "1.5.1"
         okHttpVersion = "4.9.2"
         retrofitVersion = "2.9.0"
-        fragmentKtxVersion = "1.4.1"
-        roomVersion = '2.4.0-beta02'
+        fragmentKtxVersion = "1.5.4"
+        roomVersion = '2.5.0-beta02'
 
         //Test dependencies
         jUnitVersion = '4.13.2'
@@ -48,8 +48,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20"
+        classpath 'com.android.tools.build:gradle:7.3.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
     }
 }
